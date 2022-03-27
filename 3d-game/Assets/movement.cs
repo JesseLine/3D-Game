@@ -23,9 +23,17 @@ public class movement : MonoBehaviour
 
     private Vector3 prevVelocity = Vector3.zero;
 
+    public static GameObject player;
+
+    void Awake()
+    {
+        player = gameObject;
+    }
     // Start is called before the first frame update
     void Start()
     {
+        
+
         jumpTime = Time.time - .1f;
         Application.targetFrameRate = frames;
 
@@ -116,7 +124,7 @@ public class movement : MonoBehaviour
         }
          newYVel += -gravity *gravMult * Time.deltaTime;
 
-        print(newYVel);
+// print(newYVel);
 
         RaycastHit hit;
         if (Time.time - jumpTime > .1 && Physics.SphereCast(transform.position, radius, Vector3.down, out hit, height + min(newYVel, -.01f)))
