@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -233,7 +233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &223679985
 Transform:
   m_ObjectHideFlags: 0
@@ -864,7 +864,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!195 &820613386
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1157,10 +1157,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4357955ef5c4a6949bd1013ccad7f099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: {fileID: 1539559686601808491, guid: b27c7ae802a48094680fa835699ee3bc, type: 3}
+  start: {fileID: 6448316879289672441, guid: b27c7ae802a48094680fa835699ee3bc, type: 3}
   k1x1Enemy: {fileID: 7465784113147063501, guid: 4d38a85ac7b6893469e1ecc00908eba3, type: 3}
+  small: {fileID: 349321327915297375, guid: 9d3340f7e251694428115735fb761055, type: 3}
+  large: {fileID: 7111629804169780582, guid: 800cb508145479940b5eb0c2024f6c3a, type: 3}
   store: {fileID: 7465784113147063501, guid: 4d38a85ac7b6893469e1ecc00908eba3, type: 3}
   end: {fileID: 7465784113147063501, guid: 4d38a85ac7b6893469e1ecc00908eba3, type: 3}
+  DownLeftInter: {fileID: 203884873692122739, guid: a47bb80901fca8040b8d85b11c797317, type: 3}
+  DownRightInter: {fileID: 4181878223997081087, guid: edacc285b35c4b8428a56f2a56f14757, type: 3}
+  UpLeftInter: {fileID: 5256295173144020029, guid: ff56cbae908abf84b955281642a8c3be, type: 3}
+  UpRightInter: {fileID: 5680544931138421406, guid: 81210fdb325de124e8454649eeb05b71, type: 3}
+  LeftRightPath: {fileID: 863501694695242227, guid: 8c707ab09e3f4604b99fb275f558564f, type: 3}
+  UpDownPath: {fileID: 9177459537131851781, guid: 16e06672b033c374e9fffaccda74ff46, type: 3}
+  Ladder: {fileID: 2035447070427235229, guid: 6aa3168cd427fee46a342c1b20e55b98, type: 3}
+  UpDownSmallIntRight1: {fileID: 4840691666571909059, guid: 2ac2563ba7bc5604f9b66023b666a7df, type: 3}
+  UpDownSmallIntRight2: {fileID: 8559136186859847677, guid: 98e22c2a478566c43ade10ab5b533c16, type: 3}
+  UpDownSmallIntRight3: {fileID: 4438183141965417892, guid: 51c49b1ba534c394ab6db993fefdd684, type: 3}
+  UpDownSmallIntLeft1: {fileID: 2695213924364095317, guid: dca4b4c220f16e841938f3588e7d6dd6, type: 3}
+  UpDownSmallIntLeft2: {fileID: 4711650389789875901, guid: abfc31ce824c66144a3f8c08d1393864, type: 3}
+  UpDownSmallIntLeft3: {fileID: 2003073843546345924, guid: 50c22e943c110b14eb3f41bbdd207417, type: 3}
+  LeftRightSmallIntUp1: {fileID: 2035447070427235229, guid: 6aa3168cd427fee46a342c1b20e55b98, type: 3}
+  LeftRightSmallIntUp2: {fileID: 2035447070427235229, guid: 6aa3168cd427fee46a342c1b20e55b98, type: 3}
+  LeftRightSmallIntUp3: {fileID: 2035447070427235229, guid: 6aa3168cd427fee46a342c1b20e55b98, type: 3}
+  LeftRightSmallIntDown1: {fileID: 2035447070427235229, guid: 6aa3168cd427fee46a342c1b20e55b98, type: 3}
+  LeftRightSmallIntDown2: {fileID: 2035447070427235229, guid: 6aa3168cd427fee46a342c1b20e55b98, type: 3}
+  LeftRightSmallIntDown3: {fileID: 2035447070427235229, guid: 6aa3168cd427fee46a342c1b20e55b98, type: 3}
   minRooms: 10
   maxRooms: 15
 --- !u!1 &1022028215
@@ -1994,7 +2015,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &1844288229
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2069,7 +2090,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1844288233
 MonoBehaviour:
@@ -2191,7 +2212,7 @@ RectTransform:
   m_Children:
   - {fileID: 2138842959}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
