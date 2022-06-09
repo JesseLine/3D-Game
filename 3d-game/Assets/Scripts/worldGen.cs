@@ -97,7 +97,7 @@ public class worldGen : MonoBehaviour
             switch (type)
             {
                 case RoomType.kStart:
-                    size = 10;
+                    size = 13;
                     break;
                 case RoomType.k1x1Enemy:
                     size = 13;
@@ -109,7 +109,7 @@ public class worldGen : MonoBehaviour
                     size = 20;
                     break;
                 case RoomType.kStore:
-                    size = 10;
+                    size = 13;
                     break;
                 case RoomType.kEnd:
                     size = 13;
@@ -151,7 +151,14 @@ public class worldGen : MonoBehaviour
                     break;
             }
 
-            Instantiate(room, t);
+            GameObject o = Instantiate(room, t);
+            //print(o);
+            roomController r = o.GetComponent<roomController>();
+            r.northConnection = north != null;
+            r.southConnection = south != null;
+            r.westConnection = west != null;
+            r.eastConnection = east != null;
+            r.Open();
         }
 
 
@@ -289,14 +296,14 @@ public class worldGen : MonoBehaviour
                 inter2.position = new Vector3(newX, location2.y, location2.z);
                 if (inter1.position.z < inter2.position.z)
                 {
-                    print("creating z < west");
-                    print(location1);
-                    print(inter1.position);
-                    print(inter2.position);
-                    print(location2);
+                    //print("creating z < west");
+                    //print(location1);
+                    //print(inter1.position);
+                    //print(inter2.position);
+                    //print(location2);
 
                     int dif = (int)(inter2.position.z - inter1.position.z);
-                    print(dif);
+                    //print(dif);
                     if (dif == 3)
                     {
                         Instantiate(g.LeftRightSmallIntUp3, inter1);
@@ -445,7 +452,7 @@ public class worldGen : MonoBehaviour
 
                 //wRand.Print();
                 choice = wRand.Pick();
-                print(choice);
+                //print(choice);
 
                 previous = destination;
                 switch (choice)
@@ -635,7 +642,7 @@ public class worldGen : MonoBehaviour
         {
             tree.Add(r);
         }
-        tree.Print();
+        //tree.Print();
         
         foreach(Room r in tree.dict.Values)
         {

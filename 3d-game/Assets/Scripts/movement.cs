@@ -127,7 +127,7 @@ public class movement : MonoBehaviour
 // print(newYVel);
 
         RaycastHit hit;
-        if (Time.time - jumpTime > .1 && Physics.SphereCast(transform.position, radius, Vector3.down, out hit, height + min(newYVel, -.01f)))
+        if (Time.time - jumpTime > .1 && Physics.SphereCast(transform.position, radius, Vector3.down, out hit, height + min(newYVel, .01f)))
         {
             //ground found
             transform.position = new Vector3(transform.position.x, hit.point.y + height, transform.position.z);
@@ -149,7 +149,7 @@ public class movement : MonoBehaviour
         //do a capsule cast along where we want to move, and move as far as we can without hitting something
 
         RaycastHit hit;
-
+        float saveY = newVelocity.y;
         Vector3 top = new Vector3(transform.position.x, transform.position.y - .5f, transform.position.z);
         Vector3 bot = new Vector3(transform.position.x, transform.position.y - 1.4f, transform.position.z);
 
@@ -159,6 +159,12 @@ public class movement : MonoBehaviour
             //print(newVelocity.magnitude);
             newVelocity *= min((hit.distance / newVelocity.magnitude) -.1f, 0);
         }
+
+        if (!grounded)
+        {
+            //newVelocity.Set(newVelocity.x, saveY, newVelocity.z);
+        }
+
 
         transform.position += newVelocity * Time.deltaTime;
         prevVelocity = newVelocity;

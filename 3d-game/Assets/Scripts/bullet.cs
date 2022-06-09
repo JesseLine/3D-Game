@@ -9,7 +9,7 @@ public class bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        col.gameObject.SendMessage("takeDamage", damage);
+        col.gameObject.SendMessage("takeDamage", damage, SendMessageOptions.DontRequireReceiver);
         GameObject.Destroy(gameObject);
 
     }
