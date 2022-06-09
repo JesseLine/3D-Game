@@ -239,6 +239,7 @@ public class worldGen : MonoBehaviour
                     
                     constructPath(new Vector3(inter2.position.x, inter2.position.y, inter2.position.z + 2), location2, g);
                 }
+                
                 else if (inter1.position.x > inter2.position.x)
                 {
                     int dif = (int)(inter1.position.x - inter2.position.x);
@@ -277,6 +278,8 @@ public class worldGen : MonoBehaviour
                 //constructPath(new Vector3(inter1.position.x, inter1.position.y, inter1.position.z), new Vector3(inter2.position.x, inter2.position.y, inter2.position.z), g);
                 //constructPath(new Vector3(inter2.position.x, inter2.position.y, inter2.position.z), location2, g);
             }
+            inter1 = new GameObject().transform;
+            inter2 = new GameObject().transform;
             if(west != null)
             {
                 location1 = getConnection("west");
@@ -286,7 +289,14 @@ public class worldGen : MonoBehaviour
                 inter2.position = new Vector3(newX, location2.y, location2.z);
                 if (inter1.position.z < inter2.position.z)
                 {
+                    print("creating z < west");
+                    print(location1);
+                    print(inter1.position);
+                    print(inter2.position);
+                    print(location2);
+
                     int dif = (int)(inter2.position.z - inter1.position.z);
+                    print(dif);
                     if (dif == 3)
                     {
                         Instantiate(g.LeftRightSmallIntUp3, inter1);
@@ -301,13 +311,13 @@ public class worldGen : MonoBehaviour
                     }
                     else
                     {
-                        Instantiate(g.UpLeftInter, inter1);
-                        Instantiate(g.DownRightInter, inter2);
+                        Instantiate(g.UpRightInter, inter1);
+                        Instantiate(g.DownLeftInter, inter2);
                         constructPath(new Vector3(inter1.position.x, inter1.position.y, inter1.position.z + 2), new Vector3(inter2.position.x, inter2.position.y, inter2.position.z - 2), g);
                     }
-                    constructPath(location1, new Vector3(inter1.position.x - 2, inter1.position.y, inter1.position.z), g);
+                    constructPath(location1, new Vector3(inter1.position.x + 2, inter1.position.y, inter1.position.z), g);
 
-                    constructPath(new Vector3(inter2.position.x  +2, inter2.position.y, inter2.position.z),location2,  g);
+                    constructPath(new Vector3(inter2.position.x  -2, inter2.position.y, inter2.position.z),location2,  g);
                 }
                 else if (inter1.position.z > inter2.position.z)
                 {
@@ -326,13 +336,13 @@ public class worldGen : MonoBehaviour
                     }
                     else
                     {
-                        Instantiate(g.DownLeftInter, inter1);
-                        Instantiate(g.UpRightInter, inter2);
+                        Instantiate(g.DownRightInter, inter1);
+                        Instantiate(g.UpLeftInter, inter2);
                         constructPath(new Vector3(inter1.position.x, inter1.position.y, inter1.position.z - 2), new Vector3(inter2.position.x, inter2.position.y, inter2.position.z + 2), g);
                     }
-                    constructPath(location1, new Vector3(inter1.position.x - 2, inter1.position.y, inter1.position.z), g);
+                    constructPath(location1, new Vector3(inter1.position.x + 2 , inter1.position.y, inter1.position.z), g);
 
-                    constructPath(new Vector3(inter2.position.x + 2, inter2.position.y, inter2.position.z), location2, g);
+                    constructPath(new Vector3(inter2.position.x - 2, inter2.position.y, inter2.position.z), location2, g);
                     //Instantiate(g.DownLeftInter, inter1);
                     //Instantiate(g.UpRightInter, inter2);
                     //constructPath(location1, new Vector3(inter1.position.x, inter1.position.y, inter1.position.z), g);
@@ -344,42 +354,7 @@ public class worldGen : MonoBehaviour
                     constructPath(location1, location2, g);
                 }
             }
-            if(up != null)
-            {
-                location1 = getConnection("up");
-                location2 = up.getConnection("down");
-                int newY = (int)((location1.y + location2.y) / 2);
-                for(int i = 0; i< newY; i++)
-                {
-                    Transform t = new GameObject().transform;
-                    t.position = new Vector3(location1.x, i, location1.z);
-                    Instantiate(g.Ladder, t);
-                }
-                for (int i = newY; i < location2.y; i++)
-                {
-                    Transform t = new GameObject().transform;
-                    t.position = new Vector3(location2.x, i, location2.z);
-                    Instantiate(g.Ladder, t);
-                }
-                location1.Set(location1.x, newY, location1.z);
-                location2.Set(location2.x, newY, location2.z);
-                float newX = (distance * Abs(location1.x - location2.x)) + Min(location1.x, location2.x);
-                inter1.position = new Vector3(newX, location1.y, location1.z);
-                inter2.position = new Vector3(newX, location2.y, location2.z);
-                if (inter1.position.z > inter2.position.z)
-                {
-                    Instantiate(g.DownRightInter, inter1);
-                    Instantiate(g.UpLeftInter, inter2);
-                }
-                else if (inter1.position.z < inter2.position.z)
-                {
-                    Instantiate(g.UpRightInter, inter1);
-                    Instantiate(g.DownLeftInter, inter2);
-                }
-                constructPath(location1, inter1.position, g);
-                constructPath(inter1.position, inter2.position, g);
-                constructPath(inter2.position, location2, g);
-            }
+            
 
 
         }
@@ -465,8 +440,8 @@ public class worldGen : MonoBehaviour
                 wRand.Add('w', 5 * ((destination.west == null) ? 1 : roomWeight) * ((choice == 'w') ? 4 : 1));
                 wRand.Add('e', 5 * ((destination.east == null) ? 1 : roomWeight) * ((choice == 'e') ? 4 : 1));
 
-                wRand.Add('u', 2 * ((destination.up == null) ? 1 : roomWeight));
-                wRand.Add('d', 2 * ((destination.down == null) ? 1 : roomWeight));
+                wRand.Add('u', 0 * ((destination.up == null) ? 1 : roomWeight));
+                wRand.Add('d', 0 * ((destination.down == null) ? 1 : roomWeight));
 
                 //wRand.Print();
                 choice = wRand.Pick();
