@@ -3,13 +3,26 @@ using static System.Math;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.AI;
+
 
 public class worldGen : MonoBehaviour
 {
-    void Start()
+    //public NavMeshSurface n;
+    void Awake()
     {
         createRooms();
     }
+    void Start()
+    {
+
+
+
+        //n.BuildNavMesh();
+    }
+
+
+    
 
     public class WeightedRandomizer
     {

@@ -7,6 +7,9 @@ public class roomController : MonoBehaviour
     // Start is called before the first frame update
     public GameObject NorthEntrance, SouthEntrance, WestEntrance, EastEntrance;
     public bool northConnection, southConnection, westConnection, eastConnection;
+    private bool started = false;
+    public bool endRoom = false;
+
     void Start()
     {
         
@@ -15,7 +18,10 @@ public class roomController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (endRoom)
+        {
+            Open();
+        }
     }
 
     public void SetEntrances(bool northOpen, bool southOpen, bool westOpen, bool eastOpen)
@@ -34,5 +40,14 @@ public class roomController : MonoBehaviour
     public void Open()
     {
         SetEntrances(northConnection, southConnection, westConnection, eastConnection);
+    }
+
+    public void triggerEntrance()
+    {
+        if (!started)
+        {
+            started = true;
+            Close();
+        }
     }
 }
