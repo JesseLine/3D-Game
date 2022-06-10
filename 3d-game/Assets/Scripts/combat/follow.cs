@@ -18,6 +18,6 @@ public class follow : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        agent.destination = movement.player.transform.position;
+        agent.destination = movement2.player.transform.position;
     }
 }

@@ -15,9 +15,13 @@ public class movement2 : MonoBehaviour
     public float jumpSpeed;
     public float gravity;
     public Transform camTrans;
+
+    public static GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
+        player = gameObject;
         cc = gameObject.GetComponent<CharacterController>();
     }
 
