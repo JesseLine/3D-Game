@@ -56,6 +56,7 @@ namespace Unity.AI.Navigation.Samples
         {
             NavMeshSourceTag.Collect(ref m_Sources);
             var defaultBuildSettings = NavMesh.GetSettingsByID(0);
+            defaultBuildSettings.ledgeDropHeight = 3.3f;
             print(defaultBuildSettings.GetType());
             var bounds = QuantizedBounds();
     
