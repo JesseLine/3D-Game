@@ -91,7 +91,7 @@ public class worldGen : MonoBehaviour
         public Room up = null;
         public Room down = null;
 
-
+        public int difficulty;
         public Room(RoomType type)
         {
             this.type = type;
@@ -112,7 +112,13 @@ public class worldGen : MonoBehaviour
                 case RoomType.kStart:
                     size = 13;
                     break;
-                case RoomType.k1x1Enemy:
+                case RoomType.kMedium:
+                    size = 13;
+                    break;
+                case RoomType.kReward:
+                    size = 13;
+                    break;
+                case RoomType.kSpecial:
                     size = 13;
                     break;
                 case RoomType.kSmall:
@@ -147,8 +153,8 @@ public class worldGen : MonoBehaviour
                     room = g.start;
                     print("found start");
                     break;
-                case RoomType.k1x1Enemy:
-                    room = g.k1x1Enemy;
+                case RoomType.kMedium:
+                    room = g.medium;
                     break;
                 case RoomType.kSmall:
                     room = g.small;
@@ -162,6 +168,45 @@ public class worldGen : MonoBehaviour
                 case RoomType.kEnd:
                     room = g.end;
                     break;
+                case RoomType.kSpecial:
+                    room = g.medium;
+                    break;
+                case RoomType.kReward:
+                    room = g.reward;
+                    break;
+            }
+
+            if(type == RoomType.kLarge)
+            {
+                //build terrain
+                // 20 % - no terrain
+                // 40 % - 1 terrain type
+                // 25 % - 2 terrain types
+                // 15 % - 3 terrain types
+                WeightedRandomizer wrand = new WeightedRandomizer();
+                wrand.Add('0', 4);
+                wrand.Add('1', 8);
+                wrand.Add('2', 5);
+                wrand.Add('3', 3);
+
+                int count = wrand.Pick() - '0';
+                print(count);
+                for(int i = 0; i < count; i++)
+                {
+                    //print(g.largeTerrainOptions.Count());
+                    int terrainType = (int) (Random.value * g.largeTerrainOptions.Count());
+                    GameObject terrain = g.largeTerrainOptions[terrainType];
+                    int typeCount = (int)(Random.value * 4);
+                    for(int j = 0; j < typeCount; j++)
+                    {
+                        Transform transf = new GameObject().transform;
+                        transf.eulerAngles = new Vector3(0, j * 90, 0);
+                        transf.position = location;
+                        Instantiate(terrain, transf);
+                    }
+                }
+
+
             }
 
             GameObject o = Instantiate(room, t);
@@ -172,6 +217,7 @@ public class worldGen : MonoBehaviour
             r.westConnection = west != null;
             r.eastConnection = east != null;
             r.Open();
+            r.difficulty = difficulty;
         }
 
 
@@ -569,10 +615,10 @@ public class worldGen : MonoBehaviour
     }
 
     public GameObject start;
-    public GameObject k1x1Enemy;
+    public GameObject medium;
     public GameObject small;
     public GameObject large;
-
+    public GameObject reward;
     public GameObject store;
     public GameObject end;
 
@@ -584,28 +630,45 @@ public class worldGen : MonoBehaviour
     public GameObject LeftRightSmallIntUp1, LeftRightSmallIntUp2, LeftRightSmallIntUp3;
     public GameObject LeftRightSmallIntDown1, LeftRightSmallIntDown2, LeftRightSmallIntDown3;
 
+    public GameObject[] largeTerrainOptions;
     public enum RoomType
     {
         kStart,
-        k1x1Enemy,
+        kMedium,
         kSmall,
         kLarge,
         kStore,
+        kSpecial,
+        kReward,
         kEnd
     }
 
+    private bool storeAdded = false;
+    private bool specialAdded = false;
     private Room getRandomRoom()
     {
         WeightedRandomizer wRand = new WeightedRandomizer();
-        wRand.Add('1', 10);
-        wRand.Add('s', 3);
-        wRand.Add('l', 5);
+        wRand.Add('m', 7);
+        wRand.Add('s', 4);
+        wRand.Add('l', 16);
+        if (!storeAdded)
+        {
+            wRand.Add('$', 6);
+        }
+        if (!specialAdded)
+        {
+            wRand.Add('!', 4);
+        }
+        else
+        {
+            wRand.Add('!', 1);
+        }
 
         char choice = wRand.Pick();
         switch (choice)
         {
-            case '1':
-                return new Room(RoomType.k1x1Enemy);
+            case 'm':
+                return new Room(RoomType.kMedium);
                 
             case 's':
                 return new Room(RoomType.kSmall);
@@ -613,9 +676,33 @@ public class worldGen : MonoBehaviour
             case 'l':
                 return new Room(RoomType.kLarge);
 
+            case '$':
+                storeAdded = true;
+                return new Room(RoomType.kStore);
+
+            case '!':
+                specialAdded = true;
+                return new Room(RoomType.kSpecial);
         }
-        return new Room(RoomType.k1x1Enemy);
+        return new Room(RoomType.kMedium);
     }
+
+    public static float NextGaussian()
+    {
+        float u, v, S;
+
+        do
+        {
+            u = 2.0f * Random.value - 1.0f;
+            v = 2.0f * Random.value - 1.0f;
+            S = u * u + v * v;
+        }
+        while (S >= 1.0);
+
+        float fac = Mathf.Sqrt(-2.0f * Mathf.Log(S) / S);
+        return u * fac;
+    }
+
     //creates a 3d array of room locations, along with a list of rooms in order of their appearance
 
     //1. generate list of rooms
@@ -626,6 +713,7 @@ public class worldGen : MonoBehaviour
     public int minRooms = 10;
     public int maxRooms = 15;
     public static int roomWeight = 4;
+    public int totalDifficulty = 100;
 
     private LinkedList<Room> getRoomList()
     {
@@ -637,8 +725,25 @@ public class worldGen : MonoBehaviour
         {
             rooms.AddLast(getRandomRoom());
         }
-
+        
+        rooms.AddLast(new Room(RoomType.kReward));
         rooms.AddLast(new Room(RoomType.kEnd));
+
+        List<Room> combatRooms = new List<Room>();
+        foreach(Room r in rooms)
+        {
+            if(r.type == RoomType.kMedium || r.type == RoomType.kLarge)
+            {
+                combatRooms.Add(r);
+            }
+        }
+        int mean = totalDifficulty / combatRooms.Count;
+        int stdDev = (int)(mean / 3.2);
+        foreach(Room r in combatRooms)
+        {
+            r.difficulty = (int)(mean + NextGaussian() * stdDev);
+            //print(r.difficulty);
+        }
 
         return rooms;
     }

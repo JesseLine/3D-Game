@@ -1600,6 +1600,11 @@ MonoBehaviour:
   westConnection: 0
   eastConnection: 0
   endRoom: 0
+  difficulty: 0
+  PossibleEnemies:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &3257121280459396537
 GameObject:
   m_ObjectHideFlags: 0

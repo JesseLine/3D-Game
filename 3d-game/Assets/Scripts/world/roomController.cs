@@ -9,7 +9,7 @@ public class roomController : MonoBehaviour
     public bool northConnection, southConnection, westConnection, eastConnection;
     private bool started = false;
     public bool endRoom = false;
-
+    public int difficulty;
     void Start()
     {
         
@@ -49,5 +49,29 @@ public class roomController : MonoBehaviour
             started = true;
             Close();
         }
+
+        List<GameObject> enemyList = GenerateEnemies();
+
+    }
+
+    public GameObject[] PossibleEnemies;
+
+    private List<GameObject> GenerateEnemies()
+    {
+        //Given difficulty, create a list of enemies that is pretty close to that difficulty
+        //from the list of enemies, pull 1 that has a difficulty less than or equal to remaining difficulty, until difficulty is less than like 2
+        List<GameObject> enemyList = new List<GameObject>();
+        while(difficulty > 2)
+        {
+            GameObject e = PossibleEnemies[(int)(Random.value * PossibleEnemies.Length)];
+            while(e.GetComponent<enemyInfo>().challenge > difficulty)
+            {
+                e = PossibleEnemies[(int)(Random.value * PossibleEnemies.Length)];
+            }
+            difficulty -= e.GetComponent<enemyInfo>().challenge;
+            enemyList.Add(e);
+        }
+        return enemyList;
+
     }
 }

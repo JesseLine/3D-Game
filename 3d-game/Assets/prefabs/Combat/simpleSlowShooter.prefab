@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 1885635845363437805}
   - component: {fileID: 1885635845363437803}
   - component: {fileID: 1885635845363437792}
+  - component: {fileID: 6776140996550111294}
   m_Layer: 0
-  m_Name: simpleShooter
+  m_Name: simpleSlowShooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,13 +31,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885635845363437800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0}
   m_LocalScale: {x: 0.75, y: 1.5, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8008715044666196081}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1885635845363437806
 MeshFilter:
@@ -160,8 +161,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   fleeDistance: 8
-  wigglyness: 2
+  wigglyness: 0.2
   direction: 0
+--- !u!114 &6776140996550111294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885635845363437800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07af9991e6a5d124ea0b8ce156ca74c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  challenge: 4
 --- !u!1 &8008715044666196082
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,6 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef6f5552cbac30c4a8cb99ee25e6b801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 600503545438492333, guid: 1efe0f4f4bb833c4398a4e6dab7b7ee3, type: 3}
+  bullet: {fileID: 600503545438492333, guid: 315ae0d25748b4e4eb39dbf5ef1e2888, type: 3}
   fireSpeed: 1
   bulletSpeed: 4
