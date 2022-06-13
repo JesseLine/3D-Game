@@ -7,7 +7,7 @@ public class spawner : MonoBehaviour
     // Start is called before the first frame update
     public GameObject spawn;
     public float timeBetweenSpawns;
-
+    public roomController rc;
     private float lastSpawnTime;
 
     void Start()
@@ -22,9 +22,9 @@ public class spawner : MonoBehaviour
 
         if(Time.time - lastSpawnTime > timeBetweenSpawns)
         {
-            Transform location = transform;
-            location.position.Set(location.position.x, location.position.y - 1.5f, location.position.z);
-            Instantiate(spawn, location);
+            Transform location = new GameObject().transform;
+            location.position = new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z);
+            rc.activeEnemies.Add(Instantiate(spawn, location));
             lastSpawnTime = Time.time;
         }
     }

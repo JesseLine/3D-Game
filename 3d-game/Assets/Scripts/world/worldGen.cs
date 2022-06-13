@@ -218,6 +218,8 @@ public class worldGen : MonoBehaviour
             r.eastConnection = east != null;
             r.Open();
             r.difficulty = difficulty;
+            r.size = size;
+            r.location = location;
         }
 
 

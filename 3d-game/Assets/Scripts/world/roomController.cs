@@ -7,6 +7,9 @@ public class roomController : MonoBehaviour
     // Start is called before the first frame update
     public GameObject NorthEntrance, SouthEntrance, WestEntrance, EastEntrance;
     public bool northConnection, southConnection, westConnection, eastConnection;
+    public GameObject spawnParticles;
+    public int size;
+    public Vector3 location;
     private bool started = false;
     public bool endRoom = false;
     public int difficulty;
@@ -18,12 +21,33 @@ public class roomController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (endRoom)
+        if (shouldEndRoom())
         {
             Open();
         }
     }
 
+    bool shouldEndRoom()
+    {
+        if (waitingForSpawns)
+        {
+            return false;
+        }
+        if(activeEnemies == null)
+        {
+            return false;
+        }
+        foreach(GameObject g in activeEnemies)
+        {
+            if(g != null)
+            {
+                return false;
+            }
+            
+
+        }
+        return true;
+    }
     public void SetEntrances(bool northOpen, bool southOpen, bool westOpen, bool eastOpen)
     {
         NorthEntrance.SetActive(!northOpen);
@@ -42,16 +66,70 @@ public class roomController : MonoBehaviour
         SetEntrances(northConnection, southConnection, westConnection, eastConnection);
     }
 
+    public List<GameObject> enemyList;
+    public List<GameObject> activeEnemies;
+    private bool waitingForSpawns = false;
     public void triggerEntrance()
     {
         if (!started)
         {
+            if(difficulty < 3)
+            {
+                difficulty = 3;
+            }
             started = true;
             Close();
+            enemyList = GenerateEnemies();
+            waitingForSpawns = true;
+            activeEnemies = new List<GameObject>();
+            foreach (GameObject e in enemyList)
+            {
+                Generate(e);
+            }
+
         }
 
-        List<GameObject> enemyList = GenerateEnemies();
+        
 
+
+    }
+
+    private void Generate(GameObject e)
+    {
+        Transform t = new GameObject().transform;
+        t.position = new Vector3(Random.Range(-(size / 2) + 3, (size / 2) - 3) + location.x, location.y + 8, location.z + Random.Range(-(size / 2) + 3, (size / 2) - 3));
+
+        RaycastHit hit;
+        if (Physics.Raycast(t.position, Vector3.down, out hit, 10))
+        {
+            
+            t.position = hit.point;
+            StartCoroutine(Spawn(e, t));
+            
+            
+        }
+        else
+        {
+            print("SPAWN FAIL. RAYCAST DIDN'T HIT");
+            print(t.position);
+        }
+    }
+
+    private IEnumerator Spawn(GameObject e, Transform t)
+    {
+        Instantiate(spawnParticles, t);
+        yield return new WaitForSeconds(.5f);
+        //generate haze
+        //spawn object
+        waitingForSpawns = false;
+
+        GameObject g = Instantiate(e, t);
+        if (g.GetComponent<spawner>())
+        {
+            g.GetComponent<spawner>().rc = this;
+        }
+        activeEnemies.Add(g);
+        yield return 0;
     }
 
     public GameObject[] PossibleEnemies;
