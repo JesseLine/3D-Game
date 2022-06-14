@@ -6,7 +6,7 @@ public class firing : MonoBehaviour
 {
     public GameObject bullet;
     private float _nextShotTime;
-
+    public int fireEnergy;
     public float fireSpeed = .3f;
     public float bulletSpeed = 13;
 
@@ -34,6 +34,6 @@ public class firing : MonoBehaviour
         Vector3 velocity = bulletSpeed * lookDirection;
         GameObject newBullet = Instantiate(bullet, position, Quaternion.identity);
         newBullet.GetComponent<Rigidbody>().velocity = velocity;
-
+        playerController.RemoveEnergy(fireEnergy);
     }
 }

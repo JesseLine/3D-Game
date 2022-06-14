@@ -9,8 +9,12 @@ public class bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        col.gameObject.SendMessage("takeDamage", damage, SendMessageOptions.DontRequireReceiver);
-        GameObject.Destroy(gameObject);
+        if(col.gameObject.tag != "BulletIgnore")
+        {
+            col.gameObject.SendMessage("takeDamage", damage, SendMessageOptions.DontRequireReceiver);
+            GameObject.Destroy(gameObject);
+        }
+        
 
     }
 }

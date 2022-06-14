@@ -151,7 +151,7 @@ public class worldGen : MonoBehaviour
             {
                 case RoomType.kStart:
                     room = g.start;
-                    print("found start");
+                    //print("found start");
                     break;
                 case RoomType.kMedium:
                     room = g.medium;
@@ -190,7 +190,7 @@ public class worldGen : MonoBehaviour
                 wrand.Add('3', 3);
 
                 int count = wrand.Pick() - '0';
-                print(count);
+                //print(count);
                 for(int i = 0; i < count; i++)
                 {
                     //print(g.largeTerrainOptions.Count());

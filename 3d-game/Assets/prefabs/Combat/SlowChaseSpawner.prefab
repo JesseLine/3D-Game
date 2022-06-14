@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd1231e2c825234ab5a37375260ee11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energyOrb: {fileID: 7119704591946766416, guid: 52911dc82b73aff44849ef7cbf6da07f, type: 3}
   hp: 30
 --- !u!114 &8430427890544873136
 MonoBehaviour:
@@ -135,6 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawn: {fileID: 8097461620890069719, guid: 4e45aa2afe10baf4eabc71a96329240d, type: 3}
   timeBetweenSpawns: 2
+  rc: {fileID: 0}
 --- !u!114 &6474128648173699765
 MonoBehaviour:
   m_ObjectHideFlags: 0

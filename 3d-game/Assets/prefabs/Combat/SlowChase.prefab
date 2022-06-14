@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd1231e2c825234ab5a37375260ee11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energyOrb: {fileID: 7119704591946766416, guid: 52911dc82b73aff44849ef7cbf6da07f, type: 3}
   hp: 11
 --- !u!114 &7098496204063719613
 MonoBehaviour:

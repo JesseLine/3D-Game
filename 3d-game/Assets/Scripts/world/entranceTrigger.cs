@@ -8,6 +8,10 @@ public class entranceTrigger : MonoBehaviour
     public roomController r;
     void OnTriggerEnter(Collider col)
     {
-        r.triggerEntrance();
+        if (col.gameObject.name == "Player")
+        {
+            r.triggerEntrance();
+        }
+        
     }
 }
